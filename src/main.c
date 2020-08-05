@@ -10,27 +10,25 @@
 // Mandatory plugin information.
 WUPS_PLUGIN_NAME("Dark Mode");
 WUPS_PLUGIN_DESCRIPTION("Wii U Menu dark mode");
-WUPS_PLUGIN_VERSION("v0.1");
-WUPS_PLUGIN_AUTHOR("JacquesCedric");
+WUPS_PLUGIN_VERSION("v0.2");
+WUPS_PLUGIN_AUTHOR("JacquesCedric & V10lator");
 WUPS_PLUGIN_LICENSE("GPLv3");
 
 WUPS_ALLOW_KERNEL()
 
 // Gets called once the loader exists.
 ON_APPLICATION_START(args){
+    if(!args.kernel_access)
+        return;
+
     uint64_t titleID = OSGetTitleID();
-    int *address = (int * ) 0x105DD0A8;
+    if(titleID != WII_U_MENU_TITLE_ID_JAP &&
+       titleID != WII_U_MENU_TITLE_ID_USA &&
+       titleID != WII_U_MENU_TITLE_ID_EUR)
+        return;
 
     socket_lib_init();
     log_init();
-
-    if(!args.kernel_access){
-        return;
-    }
-
-    if(titleID == WII_U_MENU_TITLE_ID_JAP ||
-       titleID == WII_U_MENU_TITLE_ID_USA ||
-       titleID == WII_U_MENU_TITLE_ID_EUR){
-        WUPS_KernelWrite(address, 0x3C800000);  
-    }
+    int *address = (int *)0x105DD0A8;
+    WUPS_KernelWrite(address, 0x3C800000);  
 }
