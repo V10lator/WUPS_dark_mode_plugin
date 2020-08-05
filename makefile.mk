@@ -31,13 +31,13 @@ INCLUDES            := src
 # options for code generation and linking
 #---------------------------------------------------------------------------------
 # Extra C AND C++ compiler flags
-COMMON_CFLAGS       := 
+COMMON_CFLAGS       := -Ofast -flto=auto -fno-fat-lto-objects -fuse-linker-plugin -pipe
 # Extra C compiler flags
 CFLAGS              :=
 # Extra C++ compiler flags
 CXXFLAGS            :=
 # Extra linking flags for all linking steps
-LDFLAGS             := 
+LDFLAGS             := -Ofast -flto=auto -fno-fat-lto-objects -fuse-linker-plugin -pipe
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
