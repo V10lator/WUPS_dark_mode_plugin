@@ -101,18 +101,14 @@ NEEDS_WUT := 0
                     
 ifeq ($(WUT_ENABLE_CPP), 1)
     WUT_ENABLE_NEWLIB    := 1
-       
-    LDFLAGS              += -Wl,-whole-archive,-lwut,-no-whole-archive
     NEEDS_WUT            := 1
 endif
 
 ifeq ($(WUT_ENABLE_NEWLIB), 1)     
-    LDFLAGS              += -Wl,-whole-archive,-lwut,-no-whole-archive
     NEEDS_WUT            := 1
 endif
 
 ifeq ($(WUT_DEFAULT_MALLOC), 1)       
-    LDFLAGS              += -Wl,-whole-archive,-lwut,-no-whole-archive
     NEEDS_WUT            := 1
 endif
 
