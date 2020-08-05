@@ -34,7 +34,7 @@ WUT_ROOT			:= $(DEVKITPRO)/wut
 # options for code generation and linking
 #---------------------------------------------------------------------------------
 # Extra C AND C++ compiler flags
-COMMON_CFLAGS       :=
+COMMON_CFLAGS       := -DFD_SETSIZE=32 -DWUPS_DM_DEBUG
 # Extra C compiler flags
 CFLAGS              :=
 # Extra C++ compiler flags
