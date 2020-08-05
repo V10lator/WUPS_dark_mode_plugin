@@ -5,6 +5,8 @@
 #define WII_U_MENU_TITLE_ID_EUR (0x0005001010040100)
 #define WII_U_MENU_TITLE_ID_USA (0x0005001010040200)
 
+#define WII_U_ADDRESS (void *)0x105DD0A8
+
 // Mandatory plugin information.
 WUPS_PLUGIN_NAME("Dark Mode");
 WUPS_PLUGIN_DESCRIPTION("Wii U Menu dark mode");
@@ -25,6 +27,5 @@ ON_APPLICATION_START(args){
        titleID != WII_U_MENU_TITLE_ID_EUR)
         return;
 
-    int *address = (int *)0x105DD0A8;
-    WUPS_KernelWrite(address, 0x3C800000);  
+    WUPS_KernelWrite(WII_U_ADDRESS, 0x3C800000);  
 }
