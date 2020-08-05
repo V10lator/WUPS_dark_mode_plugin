@@ -1,5 +1,5 @@
 # Compiling the projects with libutils logging code?
-DO_LOGGING          := 0
+DO_LOGGING          := 1
 
 # Links against the wut implementation of newlib, this is useful for using any function
 # from the C standard library
@@ -27,17 +27,20 @@ DATA                :=
 # Include directories
 INCLUDES            := src
 
+# We're out of date, so we need this:
+WUT_ROOT			:= $(DEVKITPRO)/wut
+
 #---------------------------------------------------------------------------------
 # options for code generation and linking
 #---------------------------------------------------------------------------------
 # Extra C AND C++ compiler flags
-COMMON_CFLAGS       := -Ofast -flto=auto -fno-fat-lto-objects -fuse-linker-plugin -pipe
+COMMON_CFLAGS       :=
 # Extra C compiler flags
 CFLAGS              :=
 # Extra C++ compiler flags
 CXXFLAGS            :=
 # Extra linking flags for all linking steps
-LDFLAGS             := -Ofast -flto=auto -fno-fat-lto-objects -fuse-linker-plugin -pipe
+LDFLAGS             :=
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -48,7 +51,7 @@ LIBDIRS             := $(WUPSDIR) $(WUT_ROOT)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS                := -lwups -lutilswut
+LIBS                := -lwups -lutilswut -lwut
 
 #---------------------------------------------------------------------------------
 # Will be added to the final lib paths

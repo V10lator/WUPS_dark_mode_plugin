@@ -113,9 +113,6 @@ ifeq ($(WUT_DEFAULT_MALLOC), 1)
 endif
 
 ifeq ($(NEEDS_WUT), 1)       
-    ifeq ($(strip $(WUT_ROOT)),)
-        $(error "Please set WUT_ROOT in your environment. export WUT_ROOT=<path to>wut)
-    endif
     CFLAGS += -D__WUT__
     CXXFLAGS += -D__WUT__
 endif
