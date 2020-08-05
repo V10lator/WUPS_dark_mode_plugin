@@ -1,5 +1,5 @@
 # Compiling the projects with libutils logging code?
-DO_LOGGING          := 1
+DO_LOGGING          := 0
 
 # Links against the wut implementation of newlib, this is useful for using any function
 # from the C standard library
@@ -34,7 +34,7 @@ WUT_ROOT			:= $(DEVKITPRO)/wut
 # options for code generation and linking
 #---------------------------------------------------------------------------------
 # Extra C AND C++ compiler flags
-COMMON_CFLAGS       := -DFD_SETSIZE=32 -DWUPS_DM_DEBUG
+COMMON_CFLAGS       := -DFD_SETSIZE=32
 # Extra C compiler flags
 CFLAGS              :=
 # Extra C++ compiler flags

@@ -168,12 +168,20 @@ export LIBPATHS_FULL +=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib) \
                     
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
-.PHONY: $(BUILD) clean install
+.PHONY: release debug $(BUILD) clean
+
+#---------------------------------------------------------------------------------
+debug:		MAKE_CMD	:=	debug
+debug:		$(BUILD)
+
+#-------------------------------------------------------------------------------
+release:	MAKE_CMD	:=	all
+release:	$(BUILD)
 
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile $(MAKE_CMD)
 	
 #---------------------------------------------------------------------------------
 clean:
@@ -189,9 +197,13 @@ THIS_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 ###############################################################################
 # Rule to make everything.
-PHONY += all
+PHONY += all debug
 
 all : $(OUTPUT)
+
+debug : CFLAGS += -DWUPS_DM_DEBUG -D__LOGGING__
+#debug : DO_LOGGING := 1
+debug : all
 ###############################################################################
 # Special build rules
 
@@ -218,7 +230,7 @@ $(OUTPUT) : $(OFILES)
 #---------------------------------------------------------------------------------
 %.o: %.c
 	@echo $(notdir $<)
-	@$(CC) -MMD -MP -MF $(DEPSDIR)/$*.d $(CFLAGS) $(INCLUDE_FULL)  -c $< -o $@ $(ERROR_FILTER)
+	$(CC) -MMD -MP -MF $(DEPSDIR)/$*.d $(CFLAGS) $(INCLUDE_FULL)  -c $< -o $@ $(ERROR_FILTER)
 
 #---------------------------------------------------------------------------------
 %.o: %.S
