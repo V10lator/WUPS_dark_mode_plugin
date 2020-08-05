@@ -1,6 +1,4 @@
 #include <wups.h>
-#include <nsysnet/socket.h>
-#include <utils/logger.h>
 #include <coreinit/title.h>
 
 #define WII_U_MENU_TITLE_ID_JAP (0x0005001010040000)
@@ -27,8 +25,6 @@ ON_APPLICATION_START(args){
        titleID != WII_U_MENU_TITLE_ID_EUR)
         return;
 
-    socket_lib_init();
-    log_init();
     int *address = (int *)0x105DD0A8;
     WUPS_KernelWrite(address, 0x3C800000);  
 }

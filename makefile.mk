@@ -1,5 +1,5 @@
 # Compiling the projects with libutils logging code?
-DO_LOGGING          := 1
+DO_LOGGING          := 0
 
 # Links against the wut implementation of newlib, this is useful for using any function
 # from the C standard library
