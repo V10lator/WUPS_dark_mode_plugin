@@ -48,7 +48,7 @@ LIBDIRS             := $(WUPSDIR) $(WUT_ROOT)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS                := -lwups -lutilswut -lcoreinit -lnsysnet
+LIBS                := -lwups -lutilswut
 
 #---------------------------------------------------------------------------------
 # Will be added to the final lib paths
