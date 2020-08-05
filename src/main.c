@@ -21,11 +21,11 @@ ON_APPLICATION_START(args){
     if(!args.kernel_access)
         return;
 
-    uint64_t titleID = OSGetTitleID();
-    if(titleID != WII_U_MENU_TITLE_ID_JAP &&
-       titleID != WII_U_MENU_TITLE_ID_USA &&
-       titleID != WII_U_MENU_TITLE_ID_EUR)
-        return;
-
-    WUPS_KernelWrite(WII_U_ADDRESS, 0x3C800000);  
+    switch(OSGetTitleID())
+    {
+        case WII_U_MENU_TITLE_ID_EUR:
+        case WII_U_MENU_TITLE_ID_USA:
+        case WII_U_MENU_TITLE_ID_JAP:
+            WUPS_KernelWrite(WII_U_ADDRESS, 0x3C800000);  
+    }
 }
