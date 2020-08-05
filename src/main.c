@@ -10,7 +10,7 @@
 #define WII_U_MENU_TITLE_ID_EUR (0x0005001010040200)
 #define WII_U_MENU_TITLE_ID_USA (0x0005001010040100)
 
-#define WII_U_ADDRESS (void *)0x105DD0A8
+#define WII_U_ADDRESS (void *)0x105DD2A8
 
 // Mandatory plugin information.
 WUPS_PLUGIN_NAME("Dark Mode");
