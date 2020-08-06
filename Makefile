@@ -201,7 +201,7 @@ PHONY += all debug
 
 all : $(OUTPUT)
 
-debug : CFLAGS += -DWUPS_DM_DEBUG -D__LOGGING__
+debug : CFLAGS += -D__LOGGING__
 #debug : DO_LOGGING := 1
 debug : all
 ###############################################################################
