@@ -3,8 +3,8 @@
 #include <coreinit/title.h>
 
 #ifdef __LOGGING__
-    #include <nsysnet/socket.h>
-    #include <utils/logger.h>
+	#include <nsysnet/socket.h>
+	#include <utils/logger.h>
 #else
 	#define DEBUG_FUNCTION_LINE
 #endif
@@ -62,18 +62,19 @@ static inline void darkenU()
 }
 
 // Gets called once the loader exists.
-ON_APPLICATION_START(args){ // TODO: The example plugin doesn't use args and compiles fine, why do we need args?
+ON_APPLICATION_START(args)  // TODO: The example plugin doesn't use args and compiles fine, why do we need args?
+{
 #ifdef __LOGGING__
-    socket_lib_init();
-    log_init();
-    DEBUG_FUNCTION_LINE("ON_APPLICATION_START()!\n");
+	socket_lib_init();
+	log_init();
+	DEBUG_FUNCTION_LINE("ON_APPLICATION_START()!\n");
 #endif
-
-    switch(OSGetTitleID())
-    {
-        case WII_U_MENU_TITLE_ID_EUR:
-        case WII_U_MENU_TITLE_ID_USA:
-        case WII_U_MENU_TITLE_ID_JAP:
-            darkenU();
-    }
+	
+	switch(OSGetTitleID())
+	{
+		case WII_U_MENU_TITLE_ID_EUR:
+		case WII_U_MENU_TITLE_ID_USA:
+		case WII_U_MENU_TITLE_ID_JAP:
+			darkenU();
+	}
 }
