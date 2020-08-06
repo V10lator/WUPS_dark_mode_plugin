@@ -6,7 +6,7 @@
 	#include <nsysnet/socket.h>
 	#include <utils/logger.h>
 #else
-	#define DEBUG_FUNCTION_LINE
+	#define DEBUG_FUNCTION_LINE(...)
 #endif
 
 #define WII_U_MENU_TITLE_ID_JAP (0x0005001010040000)
@@ -22,9 +22,7 @@ WUPS_PLUGIN_LICENSE("GPLv3");
 
 static inline void darkenU()
 {
-#ifdef __LOGGING__
 	DEBUG_FUNCTION_LINE("Searching address...\n");
-#endif
 	
 	uint32_t *addy = (uint32_t *)0x105DD000;
 	uint32_t a;
@@ -49,15 +47,11 @@ static inline void darkenU()
 	
 	if(!found)
 	{
-#ifdef __LOGGING__
 		DEBUG_FUNCTION_LINE("Not found!\n");
-#endif
 		return;
 	}
 	
-#ifdef __LOGGING__
 	DEBUG_FUNCTION_LINE("Patching!\n");
-#endif
 	OSBlockSet(addy, 0x3C, 1);
 }
 
