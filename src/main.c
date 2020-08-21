@@ -13,6 +13,10 @@
 #define WII_U_MENU_TITLE_ID_EUR (0x0005001010040200)
 #define WII_U_MENU_TITLE_ID_USA (0x0005001010040100)
 
+#define EUR_ADDY (uint32_t *)0x105DD2A8
+#define USA_ADDY (uint32_t *)0x105DD0A4
+#define JAP_ADDY USA_ADDY
+
 // Mandatory plugin information.
 WUPS_PLUGIN_NAME("Dark Mode");
 WUPS_PLUGIN_DESCRIPTION("Wii U Menu dark mode");
@@ -20,35 +24,39 @@ WUPS_PLUGIN_VERSION("v1.0");
 WUPS_PLUGIN_AUTHOR("JacquesCedric & V10lator");
 WUPS_PLUGIN_LICENSE("GPLv3");
 
-static inline void darkenU()
+static inline void darkenU(uint32_t *addy)
 {
-	DEBUG_FUNCTION_LINE("Searching address...\n");
-	
-	uint32_t *addy = (uint32_t *)0x105DD000;
-	uint32_t a;
-	bool found = false;
-	while(addy < (uint32_t *)0x10600000)
+	if(*(uint64_t *)addy != 0x3F80000040000000 || *(addy - 1) != 0x00000000)
 	{
-		a = *addy++;
-		if(a != 0x00000000)
-			continue;
+		DEBUG_FUNCTION_LINE("Pattern not found at hardcoded memory address!\n");
+		DEBUG_FUNCTION_LINE("Searching the pattern in memory...\n");
 		
-		a = *addy;
-		if(a != 0x3F800000)
-			continue;
+		addy = (uint32_t *)0x105DD000;
+		uint32_t a;
+		bool found = false;
+		while(addy < (uint32_t *)0x10600000)
+		{
+			a = *addy++;
+			if(a != 0x00000000)
+				continue;
+			
+			a = *addy;
+			if(a != 0x3F800000)
+				continue;
+			
+			a = *(addy + 1);
+			if(a != 0x40000000)
+				continue;
+			
+			found = true;
+			break;
+		}
 		
-		a = *(addy + 1);
-		if(a != 0x40000000)
-			continue;
-		
-		found = true;
-		break;
-	}
-	
-	if(!found)
-	{
-		DEBUG_FUNCTION_LINE("Not found!\n");
-		return;
+		if(!found)
+		{
+			DEBUG_FUNCTION_LINE("Not found!\n");
+			return;
+		}
 	}
 	
 	DEBUG_FUNCTION_LINE("Patching!\n");
@@ -64,11 +72,21 @@ ON_APPLICATION_START(args)  // TODO: The example plugin doesn't use args and com
 	DEBUG_FUNCTION_LINE("ON_APPLICATION_START()!\n");
 #endif
 	
+	uint32_t *addy;
 	switch(OSGetTitleID())
 	{
 		case WII_U_MENU_TITLE_ID_EUR:
+			addy = EUR_ADDY;
+			break;
 		case WII_U_MENU_TITLE_ID_USA:
+			addy = USA_ADDY;
+			break;
 		case WII_U_MENU_TITLE_ID_JAP:
-			darkenU();
+			addy = JAP_ADDY;
+			break;
+		default:
+			return;
 	}
+	
+	darkenU(addy);
 }
