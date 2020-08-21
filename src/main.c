@@ -60,7 +60,7 @@ static inline void darkenU(uint32_t *addy)
 	}
 	
 	DEBUG_FUNCTION_LINE("Patching!\n");
-	OSBlockSet(addy, 0x3C, 1);
+	*(uint8_t *)addy = 0x3C;
 }
 
 // Gets called once the loader exists.
