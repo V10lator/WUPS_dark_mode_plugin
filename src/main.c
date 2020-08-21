@@ -59,7 +59,7 @@ static inline void darkenU(uint32_t *addy)
 		}
 	}
 	
-	DEBUG_FUNCTION_LINE("Patching!\n");
+	DEBUG_FUNCTION_LINE("Patching at 0x%08X!\n", addy);
 	*(uint8_t *)addy = 0x3C;
 }
 
