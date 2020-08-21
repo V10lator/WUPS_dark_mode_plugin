@@ -60,7 +60,7 @@ include $(WUPSDIR)/plugin_makefile.mk
 # -nostartfiles: Do not use the standard system startup files when linking
 # -ffunction-sections: split up functions so linker can garbage collect
 # -fdata-sections: split up data so linker can garbage collect
-COMMON_CFLAGS	:= -Os -Wall -mcpu=750 -meabi -mhard-float  -D__WIIU__ -nostartfiles -ffunction-sections -fdata-sections -Wl,-q  $(COMMON_CFLAGS)
+COMMON_CFLAGS	:= -Ofast -Wall -mcpu=750 -meabi -mhard-float  -D__WIIU__ -nostartfiles -ffunction-sections -fdata-sections -Wl,-q  $(COMMON_CFLAGS)
 
 # -x c: compile as c code
 # -std=c11: use the c11 standard
