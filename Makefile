@@ -23,12 +23,11 @@ SOURCES		:=	src
 DATA		:=	data
 INCLUDES	:=	$(SOURCES)
 
-
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-COMMON_CFLAGS	:= -Ofast -Wall -nostartfiles -ffunction-sections \
-			-fdata-sections -Wl,-q  $(MACHDEP) $(INCLUDE) -D__WIIU__ \
+COMMON_CFLAGS	:= -Ofast -Wall -ffunction-sections \
+			-Wl,-q  $(MACHDEP) $(INCLUDE) -D__WIIU__ \
 			-D__WUT__ -D__WUPS__ -DFD_SETSIZE=32
 
 # -x c: compile as c code
@@ -45,9 +44,9 @@ ifeq ($(DO_LOGGING), 1)
 endif
 
 ASFLAGS	:=	-g $(ARCH)
-LDFLAGS	:=	-g $(ARCH) $(RPXSPECS) -Wl,-Map,$(notdir $@).map,--gc-sections
+LDFLAGS	:=	-g $(ARCH) $(RPXSPECS) -Wl,-Map,$(notdir $*.map) $(WUPSSPECS)
 
-LIBS	:= -lwups -lwut
+LIBS	:= -lwups -lwut -lutils
 
 Q := @
 MAKEFLAGS += --no-print-directory
@@ -56,7 +55,7 @@ MAKEFLAGS += --no-print-directory
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(PORTLIBS) $(WUPSDIR)$(WUPS_ROOT) $(WUT_ROOT)
+LIBDIRS	:= $(PORTLIBS) $(WUPSDIR) $(WUPS_ROOT) $(WUT_ROOT)
 
 #-------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -142,8 +141,6 @@ debug : all
 
 $(OUTPUT).wps	: $(OUTPUT).elf
 $(OUTPUT).elf	: $(OFILES)
-
-$(OFILES_SRC)	: $(HFILES_BIN)
   
 #-------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
