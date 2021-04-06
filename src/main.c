@@ -4,7 +4,7 @@
 
 #ifdef __LOGGING__
 	#include <nsysnet/socket.h>
-	#include <utils/logger.h>
+	#include <libutils/utils/logger.h>
 #else
 	#define DEBUG_FUNCTION_LINE(...)
 #endif
@@ -64,7 +64,7 @@ static inline void darkenU(uint32_t *addy)
 }
 
 // Gets called once the loader exists.
-ON_APPLICATION_START(args)  // TODO: The example plugin doesn't use args and compiles fine, why do we need args?
+ON_APPLICATION_START()  // TODO: The example plugin doesn't use args and compiles fine, why do we need args?
 {
 #ifdef __LOGGING__
 	socket_lib_init();
