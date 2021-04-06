@@ -3,10 +3,11 @@
 #include <coreinit/title.h>
 
 #ifdef __LOGGING__
-	#include <nsysnet/socket.h>
-	#include <libutils/utils/logger.h>
+	#include <whb/log.h>
+	#include <whb/log_udp.h>
 #else
-	#define DEBUG_FUNCTION_LINE(...)
+	#define WHBLogPrint(...)
+	#define WHBLogPrintf(...)
 #endif
 
 #define WII_U_MENU_TITLE_ID_JAP (0x0005001010040000)
@@ -28,8 +29,8 @@ static inline void darkenU(uint32_t *addy)
 {
 	if(*(uint64_t *)addy != 0x3F80000040000000 || *(addy - 1) != 0x00000000)
 	{
-		DEBUG_FUNCTION_LINE("Pattern not found at hardcoded memory address!\n");
-		DEBUG_FUNCTION_LINE("Searching the pattern in memory...\n");
+		WHBLogPrint("Pattern not found at hardcoded memory address!\n");
+		WHBLogPrint("Searching the pattern in memory...\n");
 		
 		addy = (uint32_t *)0x105DD000;
 		uint32_t a;
@@ -54,22 +55,21 @@ static inline void darkenU(uint32_t *addy)
 		
 		if(!found)
 		{
-			DEBUG_FUNCTION_LINE("Not found!\n");
+			WHBLogPrint("Not found!\n");
 			return;
 		}
 	}
 	
-	DEBUG_FUNCTION_LINE("Patching at 0x%08X!\n", addy);
+	WHBLogPrintf("Patching at 0x%08X!\n", addy);
 	*(uint8_t *)addy = 0x3C;
 }
 
 // Gets called once the loader exists.
-ON_APPLICATION_START()  // TODO: The example plugin doesn't use args and compiles fine, why do we need args?
+ON_APPLICATION_START()
 {
 #ifdef __LOGGING__
-	socket_lib_init();
-	log_init();
-	DEBUG_FUNCTION_LINE("ON_APPLICATION_START()!\n");
+	WHBLogUdpInit();
+	WHBLogPrint("ON_APPLICATION_START()!\n");
 #endif
 	
 	uint32_t *addy;
@@ -89,4 +89,10 @@ ON_APPLICATION_START()  // TODO: The example plugin doesn't use args and compile
 	}
 	
 	darkenU(addy);
+}
+
+ON_APPLICATION_REQUESTS_EXIT()
+{
+	WHBLogPrint("ON_APPLICATION_REQUESTS_EXIT()!\n");
+	WHBLogUdpDeinit();
 }

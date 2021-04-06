@@ -46,7 +46,7 @@ endif
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	:=	-g $(ARCH) $(RPXSPECS) -Wl,-Map,$(notdir $*.map) $(WUPSSPECS)
 
-LIBS	:= -lwups -lwut -lutils
+LIBS	:= -lwups -lwut
 
 Q := @
 MAKEFLAGS += --no-print-directory
