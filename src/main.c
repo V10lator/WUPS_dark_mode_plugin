@@ -8,6 +8,8 @@
 #else
 	#define WHBLogPrint(...)
 	#define WHBLogPrintf(...)
+	#define WHBLogUdpInit()
+	#define WHBLogUdpDeinit()
 #endif
 
 #define WII_U_MENU_TITLE_ID_JAP (0x0005001010040000)
