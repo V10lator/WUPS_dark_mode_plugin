@@ -91,10 +91,5 @@ ON_APPLICATION_START()
 	}
 	
 	darkenU(addy);
-}
-
-ON_APPLICATION_REQUESTS_EXIT()
-{
-	WHBLogPrint("ON_APPLICATION_REQUESTS_EXIT()!\n");
 	WHBLogUdpDeinit();
 }
