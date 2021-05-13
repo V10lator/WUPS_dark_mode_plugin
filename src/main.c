@@ -13,7 +13,7 @@
 // Mandatory plugin information.
 WUPS_PLUGIN_NAME("Dark Mode");
 WUPS_PLUGIN_DESCRIPTION("Wii U Menu dark mode");
-WUPS_PLUGIN_VERSION("v2.0");
+WUPS_PLUGIN_VERSION("v2.1");
 WUPS_PLUGIN_AUTHOR("JacquesCedric & V10lator");
 WUPS_PLUGIN_LICENSE("GPLv3");
 
