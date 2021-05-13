@@ -2,16 +2,6 @@
 #include <coreinit/memory.h>
 #include <coreinit/title.h>
 
-#ifdef __LOGGING__
-	#include <whb/log.h>
-	#include <whb/log_udp.h>
-#else
-	#define WHBLogPrint(...)
-	#define WHBLogPrintf(...)
-	#define WHBLogUdpInit()
-	#define WHBLogUdpDeinit()
-#endif
-
 #define WII_U_MENU_TITLE_ID_JAP (0x0005001010040000)
 #define WII_U_MENU_TITLE_ID_EUR (0x0005001010040200)
 #define WII_U_MENU_TITLE_ID_USA (0x0005001010040100)
@@ -31,9 +21,6 @@ static inline void darkenU(uint32_t *addy)
 {
 	if(*(uint64_t *)addy != 0x3F80000040000000 || *(addy - 1) != 0x00000000)
 	{
-		WHBLogPrint("Pattern not found at hardcoded memory address!\n");
-		WHBLogPrint("Searching the pattern in memory...\n");
-		
 		addy = (uint32_t *)0x105DD000;
 		uint32_t a;
 		bool found = false;
@@ -56,24 +43,15 @@ static inline void darkenU(uint32_t *addy)
 		}
 		
 		if(!found)
-		{
-			WHBLogPrint("Not found!\n");
 			return;
-		}
 	}
 	
-	WHBLogPrintf("Patching at 0x%08X!\n", addy);
 	*(uint8_t *)addy = 0x3C;
 }
 
 // Gets called once the loader exists.
 ON_APPLICATION_START()
 {
-#ifdef __LOGGING__
-	WHBLogUdpInit();
-	WHBLogPrint("ON_APPLICATION_START()!\n");
-#endif
-	
 	uint32_t *addy;
 	switch(OSGetTitleID())
 	{
@@ -89,7 +67,5 @@ ON_APPLICATION_START()
 		default:
 			return;
 	}
-	
 	darkenU(addy);
-	WHBLogUdpDeinit();
 }
